@@ -1,0 +1,25 @@
+= Feedback
+yugo <belovedyogurt@gmail.com>
+v0.1, 2018-10-07
+:toc:
+
+
+i'm developing 🚧
+
+== Development 
+
+=== Run redis container
+
+[source,bash]
+docker run -d --name feedback-redis -d redis
+
+=== Build docker images
+
+[source,bash]
+docker build -t feedback -f docker/Dockerfile . 
+
+=== Run container
+
+[source,bash]
+docker run -ti -v $(pwd):/app -p 3000:3000 --name feedback --link feedback-redis:redis feedback
+
