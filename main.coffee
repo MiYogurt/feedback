@@ -9,6 +9,8 @@ app = express()
 server = http.createServer app
 io = io server, adapter: redisAdapter(host: 'feedback-redis')
 
+app.use express.static 'public'
+
 app.get '/', (req, res) -> 
 	res.sendFile(__dirname + '/index.html')
 

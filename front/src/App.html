@@ -1,0 +1,175 @@
+<div id="feedback-hook">
+	<div class="wrap-btn" on:click="toggle()">
+		{#if open }
+			<embed transition:fade id="close" src="close.svg" width="30" height="30" type="image/svg+xml" />
+		{:else}
+			<embed transition:fade id="comment" src="comment.svg" width="30" height="30" type="image/svg+xml" />
+		{/if}
+	</div>
+	<div class="show-box" class:flex-show="open">
+		<div class="top">
+			<div class="status">
+				<span class="circle"></span> 尤戈
+			</div>
+			<div class="close-btn" on:click="toggle()"><span class="line"></span></div>
+		</div>
+		<div class="content">
+
+		</div>
+		<div class="bottom">
+			<input type="text" placeholder="请输入你的消息">
+		</div>
+	</div>
+</div>
+
+<script>
+	import { fade } from 'svelte-transitions';
+	export default {
+		transitions: { fade },
+		data(){
+			return {
+				open: false
+			}
+		},
+		oncreate(){
+			// this.socket = io.connect('http://localhost:3000');
+			// this.socket.on('news', function (data) {
+			// 	console.log(data);
+			// 	this.socket.emit('my other event', { my: 'data' });
+			// });
+			// this.socket.on('time', function (data) {
+			// 	console.log(data);
+			// });
+		},
+		methods: {
+			toggle(){
+				console.log("toggle")
+				const {open} = this.get()
+				this.set({open: !open})
+			}
+		}
+	}
+</script>
+
+<style>
+	* {
+		box-sizing: border-box;
+	}
+
+	#comment,
+	#close {
+		position: absolute;
+		z-index: -10;
+		user-select: none;
+	}
+
+	.flex-show {
+		display: flex !important;
+	}
+
+	#feedback-hook {
+		position: fixed;
+		z-index: 88;
+		right: 20px;
+		bottom: 20px;
+		width: 50px;
+		height: 50px;
+		background: #46a2f3;
+		box-shadow: 0 1px 28px 0 rgba(55, 154, 241, 0.5);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 50%;
+		transition: all .2s;
+		transform: translateZ(0);
+	}
+
+	#feedback-hook .wrap-btn {
+		width: 100%;
+		height: 100%;
+		cursor: pointer;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#feedback-hook:hover {
+		box-shadow: 0 1px 28px 0 rgba(55, 154, 241, 0.7);
+	}
+
+	#feedback-hook .show-box {
+		position: absolute;
+		width: 350px;
+		height: 400px;
+		bottom: 60px;
+		right: 0;
+		background: #fff;
+		box-shadow: 1px 1px 20px 0 rgba(183, 183, 183, 0.2);
+		display: none;
+	}
+
+	.show-box {
+		display: flex;
+		flex-direction: column;
+	}
+	.show-box .top {
+		height: 50px;
+		width: 100%;
+	}
+	.show-box .content {
+		flex-basis: 100%;
+		width: 100%;
+		background: #f9fafb;
+	}
+	.show-box .bottom {
+		height: 50px;
+		width: 100%;
+	}
+
+	input {
+		border: 1px solid rgba(55, 154, 241, 0);
+		outline: none;
+		font-size: 14px;
+		margin: 0;
+		padding: 0 10px;
+		width: 100%;
+		line-height: 50px;
+	}
+
+	input:focus {
+		border: 1px solid rgba(55, 154, 241, 0.5);
+	}
+	.close-btn {
+		float: right;
+		width: 40px;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+	}
+	.line {
+		display: inline-block;
+   		height: 3px;
+    	background: #d8d8d8;
+    	width: 10px;
+	}
+
+	.status {
+		float: left;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 14px;
+	}
+	.status .circle {
+		content: '';
+		display: inline-block;
+		height: 10px;
+		width: 10px;
+		border-radius: 50%;
+		background: #50d45e;
+		margin: 0 10px;
+	}
+</style>
